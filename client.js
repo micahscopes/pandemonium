@@ -28,6 +28,8 @@ var connectList = {};
 var channelIsActive = {}; // tracks which channels are active
 var usernameField;
 var midi;
+var midiOutputs;
+var midiInputs;
 
 function init() { /* onload */
 	usernameField = document.getElementById("username");
@@ -42,6 +44,8 @@ function onMIDIFailure(msg) {
 function onMIDISuccess(midiAccess) {
 	console.log( "MIDI ready!" );
 	midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
+	midiInputs = midi.inputs();
+	midiOutputs = midi.outputs();
 	ioConfiguration();
 }
 
@@ -68,22 +72,19 @@ function connect() {
 }
 
 function handleIncomingMessage(who, mstType, content) {
-	midi.outputs.forEach(function(o){
-		if (o.enabled) {
-			o.send(content);
-			addToConversation(who, msgType, content)
+	midiOutputs.forEach(function(o){
+		if(o.enabled) {
+			var c = content;
+			o.send(new Uint8Array([c[0],c[1],c[2]]));
 		}
 	});
-}
-function addToConversation(who, msgType, content) {
-    // Escape html special characters, then add linefeeds.
-    content = JSON.stringify(content);
+	content = JSON.stringify(content);
     content = content.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     content = content.replace(/\n/g, '<br />');
     document.getElementById('conversation').innerHTML +=
             "<b>" + easyrtc.idToName(who) + ":</b>&nbsp;" + content + "<br />";
-}
 
+}
 
 function openListener(otherParty) {
     channelIsActive[otherParty] = true;
@@ -98,10 +99,9 @@ function closeListener(otherParty) {
 
 function ioConfiguration() {
 	var inputsConfigArea = document.getElementById('inputsConfig');
-	for (var i in midi.inputs()) {
+	midiInputs.forEach(function(input,i) {
 		var checkbox,label;
 		var id = "inputCheck"+i;
-		var input = midi.inputs()[i];
 		label = document.createElement('label');
 		checkbox = document.createElement('input');
 		checkbox.id = id;
@@ -109,21 +109,20 @@ function ioConfiguration() {
 		inputsConfigArea.appendChild(label);
 		label.appendChild(checkbox);
 		label.innerHTML += input.name;
-		
+		checkbox = document.getElementById(id);
 		checkbox.onchange = function(e) {
 			if(e.target.checked) {
-				listenForMIDI(midi,midi.inputs()[i],handleLocalMIDI);
+				listenForMIDI(midi,input,handleLocalMIDI);
 			} else {
-				listenForMIDI(midi,midi.inputs()[i]); 
+				listenForMIDI(midi,input); 
 			}
 		}
-	}
+	});
 	
 	var outputsConfigArea = document.getElementById('outputsConfig');
-	for (var i in midi.outputs()) {
+	midiOutputs.forEach(function(output,i) {
 		var checkbox,label;
 		var id = "outputCheck"+i;
-		var output = midi.outputs()[i];
 		label = document.createElement('label');
 		label.for = id;
 		checkbox = document.createElement('input');
@@ -132,12 +131,11 @@ function ioConfiguration() {
 		label.appendChild(checkbox);
 		outputsConfigArea.appendChild(label);
 		label.innerHTML += output.name;
+		checkbox = document.getElementById(id);
 		checkbox.onchange = function(e) {
-			e.target.associated.enabled = midi.outputs()[i].checked;
+			 output.enabled = e.target.checked;
 		}
-	}
-	
-	
+	});
 }
 
 function convertListToButtons(roomName, occupantList, isPrimary) {
