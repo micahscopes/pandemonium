@@ -1,15 +1,8 @@
 var midi = null;  // global MIDIAccess object
 
-function onMIDISuccess( midiAccess ) {
-  console.log( "MIDI ready!" );
-  midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
+function midiInit(onMIDISuccess,onMIDIFailure) {
+	navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
 }
-
-function onMIDIFailure(msg) {
-  console.log( "Failed to get MIDI access - " + msg );
-}
-
-navigator.requestMIDIAccess().then( onMIDISuccess, onMIDIFailure );
 
 function listInputsAndOutputs( midiAccess ) {
   for (var input in midiAccess.inputs) {
@@ -25,17 +18,7 @@ function listInputsAndOutputs( midiAccess ) {
   }
 }
 
-// receiving/sending midi
-
-function handleNetMIDI ( event ) {
-	// pass event to local stuff
-}
-
-function handleLocalMIDI( event ) {
-	// send midi to connected peers
-}
-
-function listenForMIDI( midiAccess, indexOfPort, handler ) {
-	midiAccess.inputs.entries[indexOfPort].onmidimessage = handler;
+function listenForMIDI( midiAccess, input, handler ) {
+	input.onmidimessage = handler;
 }
 
