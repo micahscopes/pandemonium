@@ -11,7 +11,7 @@
     "url": "https://github.com/timbresmith/pandemonium.git"
   },
   "dependencies": {
-    "easyrtc": "https://github.com/priologic/easyrtc.git"
+    "easyrtc": "1.0.12"
   },
   "author": "Micah",
   "license": "BSD-2-Clause",
