@@ -1,0 +1,21 @@
+{
+  "name": "pandemonium",
+  "version": "0.0.0",
+  "description": "WebRTC/MIDI chatroom",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/timbresmith/pandemonium.git"
+  },
+  "dependencies": {
+    "easyrtc": "https://github.com/priologic/easyrtc.git"
+  },
+  "author": "Micah",
+  "license": "BSD-2-Clause",
+  "bugs": {
+    "url": "https://github.com/timbresmith/pandemonium/issues"
+  }
+}
