@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Pandemonium!!!</title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="node_modules/easyrtc/api/easyrtc.js"></script>
+        <script type="text/javascript" src="midi.js"></script>
+        <script type="text/javascript" src="client.js"></script>
+
+        <style type="text/css">
+            .alert img {
+                float:left;
+                padding-right: 10px;
+            }
+            #configArea {
+				display: block;
+				padding: 30px 0;
+			}
+            #username {
+			}
+            #sendMessageArea{
+                float:left;
+                clear: left;
+                width:400px;
+                padding-right:20px;
+            }
+            #sendMessageText{
+                width:100%;
+            }
+            #conversation {
+                height:300px;
+                border:solid 1px gray;
+                overflow-y:scroll;
+            }
+        </style>
+        <!--show-->
+    </head>
+    <body onload="init()">
+        <!--hide-->
+        <div id="container">
+            <div id="main">
+                <!-- Main Content -->
+                <h1>EasyRTC Demo: Data Channel Messaging</h1>
+                <p>This application demonstrates text messaging using data channels via the easyrtc.sendDataP2P method.</p>
+                <div id="configArea">
+				<div>
+					name:	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
+							<button id="connectButton" onclick="connect()">connect</button>
+				</div>
+				<div>
+					Send from devices:
+					<input type="checkbox"></input>
+					<input type="checkbox"></input>
+					<input type="checkbox"></input>
+				</div>
+				<div>
+					Receive to devices:
+					<input type="checkbox"></input>
+					<input type="checkbox"></input>
+					<input type="checkbox"></input>
+				</div>
+				</div>
+                <div id="sendMessageArea">
+                    <div id="iam">Obtaining ID...</div>
+                    <textarea id="sendMessageText"></textarea>
+                    <div id="otherClients"></div>
+                </div>
+                <div id="receiveMessageArea">
+                    Received Messages:
+                    <div id="conversation"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
