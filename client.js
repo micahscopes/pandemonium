@@ -155,7 +155,7 @@ function convertListToButtons(roomName, occupantList, isPrimary) {
         var rowLabel = document.createElement("b");
         rowLabel.innerHTML = easyrtc.idToName(easyrtcid);
         rowGroup.appendChild(rowLabel);
-
+		rowGroup.id = "user_"+easyrtcid;
         button = document.createElement('button');
         button.id = "connect_" + easyrtcid;
         button.onclick = function(easyrtcid) {
@@ -190,6 +190,7 @@ function updateButtonState(otherEasyrtcid) {
     if(document.getElementById('connect_' + otherEasyrtcid)) {
         document.getElementById('connect_' + otherEasyrtcid).innerHTML = (isConnected ? "Disconnect" : "Connect");
         if(!isConnected) {
+			document.getElementById('user_'+otherEasyrtcid).className = "connected";
 			document.getElementById('connect_' + otherEasyrtcid).onclick =
 			function(easyrtcid) {
 				return function() {
@@ -197,6 +198,7 @@ function updateButtonState(otherEasyrtcid) {
 				};
 			}(otherEasyrtcid);
 		} else {
+			document.getElementById('user_'+otherEasyrtcid).className = "disconnected";
 			document.getElementById('connect_' + otherEasyrtcid).onclick =
 			function(easyrtcid) {
 				return function() {
@@ -268,7 +270,7 @@ function sendStuffP2P(otherEasyrtcid) {
 
 
 function loginSuccess(easyrtcid) {
-    document.getElementById("usernameConfig").innerHTML = "<h4>"+easyrtc.idToName(easyrtcid)+"</h4>";
+    document.getElementById("usernameConfig").innerHTML = "<h4 class='me'>"+easyrtc.idToName(easyrtcid)+"</h4>";
     document.getElementById("iam").innerHTML = "";
 }
 
