@@ -89,7 +89,9 @@ function ioConfiguration() {
 		checkbox = document.createElement('input');
 		checkbox.id = id;
 		checkbox.type = "checkbox";
-		inputsConfigArea.appendChild(label);
+		var div = document.createElement('div');
+		div.appendChild(label);
+		inputsConfigArea.appendChild(div);
 		label.appendChild(checkbox);
 		label.appendChild(document.createTextNode(input.name));
 		checkbox = document.getElementById(id);
@@ -107,12 +109,13 @@ function ioConfiguration() {
 		var checkbox,label;
 		var id = "outputCheck"+i;
 		label = document.createElement('label');
-		label.for = id;
+		var div = document.createElement('div');
+		div.appendChild(label);
 		checkbox = document.createElement('input');
 		checkbox.id = id;
 		checkbox.type = "checkbox";
 		label.appendChild(checkbox);
-		outputsConfigArea.appendChild(label);
+		outputsConfigArea.appendChild(div);
 		label.appendChild(document.createTextNode(output.name));
 		checkbox.onchange = function(e) {
 			 output.enabled = e.target.checked;
@@ -247,7 +250,7 @@ function sendStuffP2P(otherEasyrtcid) {
 
 
 function loginSuccess(easyrtcid) {
-    document.getElementById("usernameConfig").innerHTML = "<h3>"+easyrtc.idToName(easyrtcid)+"</h3>";
+    document.getElementById("usernameConfig").innerHTML = "<h4>"+easyrtc.idToName(easyrtcid)+"</h4>";
     document.getElementById("iam").innerHTML = "";
 }
 

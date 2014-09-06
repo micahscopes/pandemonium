@@ -10,14 +10,13 @@
 
         <style type="text/css">
 			body {
-				font-size: 2em;
+				font-size: 1.7em;
 				font-family: Helvetica, sans;
 				background-color: #222;
 				color: white;
 			}
-			
 			#titleBar {
-				font-size: 3em;
+				font-size: 2.2em;
 				text-align: center;
 				letter-spacing: 40px;
 			}
@@ -29,27 +28,27 @@
 				display: block;
 			}
             #username {
+				display: inline-block;
 			}
 			
 			#configArea, #sendMessageArea, #conversation {
-                padding:0 20px 20px 20px;
+                padding:0 20px 10px 20px;
 			}
 			
             #sendMessageArea{
-                float:left;
-                clear: left;
                 width:300px;
             }
             #sendMessageText{
                 width:100%;
             }
             #conversation {
-                height:300px;
-                margin-right: 10%;
+				font-size: 0.8em;
+                height:400px;
+                margin: 2%;
                 border:solid 1px gray;
                 overflow-y:scroll;
             }
-            
+
 			input[type=checkbox]:before{
 			content:"⬀";
 			color:white;
@@ -68,13 +67,19 @@
 			background-color: #222;
 			color:#aaff33;
 		}
-		#outputsConfig input[type=checkbox]:before {
+		#outputsConfig div input[type=checkbox]:before {
 			content:"⬂";}
 		
-		#outputsConfig input[type=checkbox]:checked:before {
+		#outputsConfig div input[type=checkbox]:checked:before {
 			content:"↘";}
+			
+		#outputsConfig,#inputsConfig {
+			float:right;
+			width: 30%;
+		}
 		
 		label { padding:0 1em }
+		
 
         </style>
     </head>
@@ -83,16 +88,19 @@
             <div id="main">
                 <h1 id="titleBar">Pandemonium!!!</h1>
                 <div id="configArea">
-				<div id="usernameConfig">
-					name:	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
-							<button id="connectButton" onclick="connect()">connect</button>
+				<div id="outputsConfig">
+					incoming:
 				</div>
 				<div id="inputsConfig">
 					outgoing:
 				</div>
-				<div id="outputsConfig">
-					incoming:
+
+				<div id="usernameConfig">
+					name:	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
+							<button id="connectButton" onclick="connect()">connect</button>
 				</div>
+
+
 				</div>
                 <div id="sendMessageArea">
                     <div id="iam">...</div>
