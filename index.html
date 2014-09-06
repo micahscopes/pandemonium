@@ -13,7 +13,7 @@
 				font-size: 1.7em;
 				font-family: Helvetica, sans;
 				background-color: #222;
-				color: white;
+				color: #bbb	;
 			}
 			#titleBar {
 				font-size: 1.5em;
@@ -36,8 +36,7 @@
 			#usernameConfig h4 {
 				padding:0;
 				margin:0;
-				font-decoration: italics;
-				color: #aaff33;
+				font-style: italic;
 			}
 			
 			#configArea, #sendMessageArea, #conversation {
@@ -45,9 +44,21 @@
 			}
 			
             #sendMessageArea{
-                width:300px;
-                color: yellow;
+                width:400px;
+                color: white;
             }
+            .disconnected {
+				color: #aaff33;
+			}
+			
+			.connected {
+				color: #ddd;
+			}
+			
+			.me {
+				color: #3399FF;
+			}
+			
             #sendMessageText{
                 width:100%;
             }
@@ -75,17 +86,24 @@
 			input[type=checkbox]:checked:before {
 			content:"↗";
 			background-color: #222;
-			color:#aaff33;
+			color:#3399FF;
 		}
 		#outputsConfig div input[type=checkbox]:before {
 			content:"⬂";}
 		
 		#outputsConfig div input[type=checkbox]:checked:before {
+			color:#aaff33;
 			content:"↘";}
 			
 		#outputsConfig,#inputsConfig {
 			float:right;
 			width: 30%;
+		}
+		
+		#outputsConfig span, #inputsConfig span {
+			font-style: italic;
+			padding: 10px;
+			font-weight: bold;
 		}
 		
 		label { padding:0 1em }
@@ -99,23 +117,24 @@
                 <h1 id="titleBar">Pandemonium!!!</h1>
                 <div id="configArea">
 				<div id="outputsConfig">
-					incoming:
+					<span>incoming from net:</span>
 				</div>
 				<div id="inputsConfig">
-					outgoing:
+					<span>outgoing to net:	</span>
 				</div>
 
 				<div id="usernameConfig">
-					name:	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
+					<em>name:</em>	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
 							<button id="connectButton" onclick="connect()">connect</button>
 				</div>
 
 
 				</div>
                 <div id="sendMessageArea">
-                    <div id="iam">...</div>
+                    <div id="iam"><br/></div>
                     <textarea id="sendMessageText"></textarea>
                     <div id="otherClients"></div>
+                    <br/>
                 </div>
                 <div id="receiveMessageArea">
                     Received Messages:
