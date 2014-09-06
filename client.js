@@ -3,8 +3,8 @@ var connectList = {};
 var channelIsActive = {}; // tracks which channels are active
 var usernameField;
 var midi;
-var midiOutputs;
-var midiInputs;
+var midiOutputs = [];
+var midiInputs = [];
 
 function init() { /* onload */
 	usernameField = document.getElementById("username");
@@ -19,8 +19,26 @@ function onMIDIFailure(msg) {
 function onMIDISuccess(midiAccess) {
 	console.log( "MIDI ready!" );
 	midi = midiAccess;  // store in the global (in real usage, would probably keep in an object instance)
-	midiInputs = midi.inputs();
-	midiOutputs = midi.outputs();
+	var getType = {};
+
+	if (midi.inputs && getType.toString.call(midi.inputs) == '[object Function]') {
+		midiInputs = midi.inputs();
+		midiOutputs = midi.outputs();
+	} else {
+		 var inputs=midiAccess.inputs(); 
+		 for(var key in inputs) 
+		 {
+		  var input=inputs[key];
+		  midiInputs.push(input);
+		 }
+
+		 var outputs=midiAccess.outputs();
+		 for(var key in outputs)
+		 {
+		  var output=outputs[key];
+		  midiOutputs.push(output);
+		 }
+	}
 	ioConfiguration();
 }
 
