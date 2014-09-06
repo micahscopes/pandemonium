@@ -9,54 +9,93 @@
         <script type="text/javascript" src="client.js"></script>
 
         <style type="text/css">
+			body {
+				font-size: 2em;
+				font-family: Helvetica, sans;
+				background-color: #222;
+				color: white;
+			}
+			
+			#titleBar {
+				font-size: 3em;
+				text-align: center;
+				letter-spacing: 40px;
+			}
             .alert img {
                 float:left;
                 padding-right: 10px;
             }
             #configArea {
 				display: block;
-				padding: 30px 0;
 			}
             #username {
 			}
+			
+			#configArea, #sendMessageArea, #conversation {
+                padding:0 20px 20px 20px;
+			}
+			
             #sendMessageArea{
                 float:left;
                 clear: left;
-                width:400px;
-                padding-right:20px;
+                width:300px;
             }
             #sendMessageText{
                 width:100%;
             }
             #conversation {
                 height:300px;
+                margin-right: 10%;
                 border:solid 1px gray;
                 overflow-y:scroll;
             }
+            
+			input[type=checkbox]:before{
+			content:"⬀";
+			color:white;
+			font-size:2.5em;
+			display:inline-block;
+			width:1em; height:1em;
+			background-color:#222;
+			margin:1em;
+			top:-1.4em;
+			left:-1.6em;
+			position:relative;
+			}
+
+			input[type=checkbox]:checked:before {
+			content:"↗";
+			background-color: #222;
+			color:#aaff33;
+		}
+		#outputsConfig input[type=checkbox]:before {
+			content:"⬂";}
+		
+		#outputsConfig input[type=checkbox]:checked:before {
+			content:"↘";}
+		
+		label { padding:0 1em }
+
         </style>
-        <!--show-->
     </head>
     <body onload="init()">
-        <!--hide-->
         <div id="container">
             <div id="main">
-                <!-- Main Content -->
-                <h1>EasyRTC Demo: Data Channel Messaging</h1>
-                <p>This application demonstrates text messaging using data channels via the easyrtc.sendDataP2P method.</p>
+                <h1 id="titleBar">Pandemonium!!!</h1>
                 <div id="configArea">
-				<div>
+				<div id="usernameConfig">
 					name:	<input id="username" onkeydown="if (event.keyCode == 13) document.getElementById('connectButton').click();"></input>
 							<button id="connectButton" onclick="connect()">connect</button>
 				</div>
 				<div id="inputsConfig">
-					Send from devices:
+					outgoing:
 				</div>
 				<div id="outputsConfig">
-					Receive to devices:
+					incoming:
 				</div>
 				</div>
                 <div id="sendMessageArea">
-                    <div id="iam">Obtaining ID...</div>
+                    <div id="iam">...</div>
                     <textarea id="sendMessageText"></textarea>
                     <div id="otherClients"></div>
                 </div>
